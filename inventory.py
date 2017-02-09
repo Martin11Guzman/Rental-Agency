@@ -1,23 +1,41 @@
-import csv
-from collections import namedtuple, OrderedDict
-
-Item = namedtuple('Item', ['quantity', 'current_quantity', 'price'])
-Inventory = OrderedDict([
-    ('Wheelchair:', Item(20, 20, 900)),
-    ('Scooters:', Item(20, 20, 1000)),
-    ('Hospital Beds:', Item(20, 20, 3000)),
-    ('Stretchers:', Item(20, 20, 1000)),
-    ('Surgical tools:', Item(20, 20,  200)),
-    ('MRI machines:', Item(20, 20, 4000)),
-    ('Leg Braces:', Item(20, 20, 400)),
-    ('Shower chair:', Item(20, 20,  100)),
-    ('Walking boot:', Item(20, 20, 200)),
-    ('X-ray machine:', Item(20, 20, 5000)),
-    ('Crutches:', Item(20, 20, 500))])
+import pickle
 
 
+class Inventory:
+    def __init__(self, quantity, current_quantity, price):
+        self.quantity = quantity
+        self.current_quantity = current_quantity
+        self.price = price
 
-with open('Inventory.csv', 'w') as f:
-    w = csv.writer(f)
-    w.writerow(('name', 'quantity', 'current_quantity', 'price'))    # field header
-    w.writerows([(name, data.quantity, data.current_quantity, data.price) for name, data in Inventory.items()])
+    def __repr__(self):
+        return 'Inventory(quantity={},current_quantity={},price={})'.format(repr(self.quantity),
+                                                                            repr(self.current_quantity),
+                                                                            repr(self.price))
+
+
+inventory_items = {
+    'Wheelchair': Inventory(20, 20, 900),
+    'Scooters': Inventory(20, 20, 1000),
+    'Hospital Beds': Inventory(20, 20, 3000),
+    'Stretchers': Inventory(20, 20, 1000),
+    'Surgical tools': Inventory(20, 20, 200),
+    'MRI machines': Inventory(20, 20, 4000),
+    'Leg Braces': Inventory(20, 20, 400),
+    'Shower chair': Inventory(20, 20, 100),
+    'Walking boot': Inventory(20, 20, 200),
+    'X-ray machine': Inventory(20, 20, 5000),
+    'Crutches': Inventory(20, 20, 500)}
+
+
+# Stores data (serialize)
+
+def save(inventory_items):
+    with open('Inventory.csv', 'wb') as data:
+        pickle.dump(inventory_items, data)
+
+# Loads(deserialize)
+
+def load():
+    with open('Inventory.csv', 'rb') as data:
+        return pickle.load(data)
+

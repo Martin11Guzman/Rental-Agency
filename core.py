@@ -1,6 +1,10 @@
-menu = input("""Press 1 to add stock.
-Press 2 to check stock.
-Press 3 to enter purchase.
-Press q to quit the program.
-What would you like to do.
-""")
+
+def raise_price(self, amount):
+    self.price += amount
+
+
+def discount(self, percent):
+    self.price *= 1 - percent
+
+    rental.raise_price(5)
+    rental.discount(.3)

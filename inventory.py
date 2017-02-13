@@ -1,41 +1,35 @@
+from Classes import *
 import pickle
+import csv
 
 
-class Inventory:
-    def __init__(self, quantity, current_quantity, price):
-        self.quantity = quantity
-        self.current_quantity = current_quantity
-        self.price = price
-
-    def __repr__(self):
-        return 'Inventory(quantity={},current_quantity={},price={})'.format(repr(self.quantity),
-                                                                            repr(self.current_quantity),
-                                                                            repr(self.price))
 
 
-inventory_items = {
-    'Wheelchair': Inventory(20, 20, 900),
-    'Scooters': Inventory(20, 20, 1000),
-    'Hospital Beds': Inventory(20, 20, 3000),
-    'Stretchers': Inventory(20, 20, 1000),
-    'Surgical tools': Inventory(20, 20, 200),
-    'MRI machines': Inventory(20, 20, 4000),
-    'Leg Braces': Inventory(20, 20, 400),
-    'Shower chair': Inventory(20, 20, 100),
-    'Walking boot': Inventory(20, 20, 200),
-    'X-ray machine': Inventory(20, 20, 5000),
-    'Crutches': Inventory(20, 20, 500)}
+def load(Rental):
+    try:
+        with open('inventory.p', 'rb') as file:
+            return pickle.load(file)
+    except FileNotFoundError:
+        return inventory_items
 
 
-# Stores data (serialize)
 
-def save(inventory_items):
-    with open('Inventory.csv', 'wb') as data:
+def save():
+    with open('inventory.p', 'wb') as data:
         pickle.dump(inventory_items, data)
 
-# Loads(deserialize)
+# def choose_item(inventory_items, name):
+#     customer_item = ''
+#     for i in inventory_items:
+#         customer_item = Rental(i[0], i[1], i[2], i[3], i[4],)
+#     if customer_item.name == name:
+#         return customer_item
+#     else:
+#         customer_item = None
+#         return customer_item
+# load(repr(inventory_items))
 
-def load():
-    with open('Inventory.csv', 'rb') as data:
-        return pickle.load(data)
+
+
+
 

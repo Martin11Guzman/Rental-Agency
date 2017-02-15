@@ -12,12 +12,12 @@ class Rental():
         return 'Rental(name={},quantity={},deposit={},price={},replacement_value={})'.format(repr(self.name),
         repr(self.quantity), repr(self.price), repr(self.deposit), repr(self.replacement_value))
 
-inventory_items = [Rental('Wheelchair', 20, 90, 100, 900), Rental('Scooters', 20, 100, 100, 1000),
-                   Rental('Hospital Bed', 20, 300, 100, 3000), Rental('Stretchers', 20, 100, 100, 1000, ),
-                   Rental('Surgical Tools', 20, 20, 100, 200), Rental('MRI Machines', 20, 400, 100, 4000),
-                   Rental('Leg Braces', 20, 40, 100, 400), Rental('Shower chair', 20, 10, 100, 100),
-                   Rental('Walking boot', 20, 20, 100, 200), Rental('X-ray machine', 20, 500, 100, 5000),
-                   Rental('Crutches', 20, 50, 100, 500)]
+# inventory_items = [Rental('Wheelchair', 20, 90, 100, 900), Rental('Scooters', 20, 100, 100, 1000),
+#                    Rental('Hospital Bed', 20, 300, 100, 3000), Rental('Stretchers', 20, 100, 100, 1000, ),
+#                    Rental('Surgical Tools', 20, 20, 100, 200), Rental('MRI Machines', 20, 400, 100, 4000),
+#                    Rental('Leg Braces', 20, 40, 100, 400), Rental('Shower chair', 20, 10, 100, 100),
+#                    Rental('Walking boot', 20, 20, 100, 200), Rental('X-ray machine', 20, 500, 100, 5000),
+#                    Rental('Crutches', 20, 50, 100, 500)]
 
 
 

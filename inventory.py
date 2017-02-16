@@ -60,49 +60,33 @@ def choose_item(inventory_list, name):
             customer_item = None
         return customer_item
 
+def update_deposits(deposit, f):
+    return write_row(f, [[deposit]])
+
+def update_revenue(rent, sales_tax, f):
+    return write_row(f, [[rent, sales_tax]])
+
+def renovate_inventory(name, quantity, f):
+    stock = []
+    inv = data_from_file(f)
+    for i in inv:
+        stock.append(Rental(i[0], i[1], i[2], i[3], i[4]))
+    for i in stock:
+        if i.name == name:
+            i.quantity = quantity
+    file = open(f, 'w')
+    writer = csv.writer(file, delimiter=',')
+    for i in stock:
+        writer.writerow([i.name, i.replacement_value, i.deposit, i.price, i.quantity])
+    file.close()
+    with open(f) as file:
+        inv = file.read()
+        return inv
+
+def renovate_transaction(f, date, item, status ):
+    return write_row(f, [[date, item, status]])
 
 
 
 
 
-
-
-
-
-
-
-
-
-def rent():
-    show = data_from_file('inventory.csv')
-    print(view_inv(show))
-    item = input("What will you be renting? Product name: ").strip().capitalize()
-    if item == "Q":
-        print('System closing...')
-        sys.exit()
-    else:
-        customer_choice = get_item_by_name(data_from_file('inventory.csv'), item)
-        if customer_choice == None:
-            print("\nInvalid choice " + item + " is not in inventory\n")
-            rent()
-        else:
-            print(customer_choice.deposit_value, customer_choice.price)
-            print("You must place a deposit of $", customer_choice.deposit_value, "along with a fee of $",
-                  customer_choice.price, "every hour the item is rented. Deposits are refunded upon return.\n")
-            print("Confirm you purchase for\n", str(customer_choice))
-            confirmation = input('y/n\n').strip().lower()
-            if confirmation == "y":
-                update_inventory(customer_choice.name, int(customer_choice.quantity) - 1, 'inventory.csv')
-                update_transaction(datetime.datetime.now(), customer_choice.name, "pending", 'transaction.csv')
-                update_deposits(customer_choice.deposit_value, 'deposit.csv')
-                restart()
-            elif confirmation == "n":
-                restart()
-            elif confirmation == "q":
-                print("System closing...")
-                sys.exit()
-            else:
-                print('invalid entry')
-
-
-restart()

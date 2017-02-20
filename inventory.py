@@ -36,35 +36,6 @@ def write_row(f, attributes):
 
 
 
-def view_inv(inventory_list):
-    inventory_string = ''
-    for item in inventory_list:
-        inventory_string += ('\nRental: ' + str(item[0])+ '\nreplacement value: '+ "$" + str(item[1])+\
-                              '\ndeposit: '+"$"+ str(item[2])+"\nprice per week: "+ "$" + str(item[3])+\
-                                             '\ncurrent stock: '+ str(item[4])+ "\n")
-        return inventory_string
-
-
-
-
-
-
-
-
-def choose_item(inventory_list, name):
-    for i in inventory_list:
-        customer_item = Rental(i[0], i[1], i[2], i[3], i[4])
-        if customer_item.name == name:
-            return customer_item
-        else:
-            customer_item = None
-        return customer_item
-
-def update_deposits(deposit, f):
-    return write_row(f, [[deposit]])
-
-def update_revenue(rent, sales_tax, f):
-    return write_row(f, [[rent, sales_tax]])
 
 def renovate_inventory(name, quantity, f):
     stock = []

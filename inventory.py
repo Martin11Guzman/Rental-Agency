@@ -1,41 +1,6 @@
 from Classes import *
 import csv
-
-
-def check_if_files_exist():
-    datafile="/home/basecamp/Desktop/Rental-Agency/inventory.csv"
-    try:
-        make_data_files(datafile)
-        make_data_files('revenue.csv')
-        make_data_files('deposit.csv')
-        make_data_files('transaction.csv')
-        write_row("inventory.csv", inv_items())
-
-
-        print("Testing your dns servers, please wait...")
-    except IOError as e:
-       print("Error: %s not found." % datafile)
-
-def make_data_files(f):
-    with open(f, 'w') as files:
-        return files.close()
-
-def data_from_file(f):
-    with open(f, newline='') as data:
-        invent = csv.reader(data, delimiter=',', quotechar='|')
-        return list(invent)
-
-def write_row(f, attributes):
-    with open(f, 'a', newline='') as file:
-        writer = csv.writer(file)
-        for row in attributes:
-            writer.writerow(row)
-    with open(f) as file:
-        data = file.read()
-        return data
-
-
-
+import file_manipulation
 def view_inv(inventory_list):
     inventory_string = ''
     for item in inventory_list:
@@ -63,6 +28,7 @@ def renovate_inventory(name, quantity, f):
 
 def renovate_transaction(f, date, item, status ):
     return write_row(f, [[date, item, status]])
+
 
 
 

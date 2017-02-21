@@ -49,7 +49,7 @@ def choose_item(inventory_list, name):
     return customer_item
 
 
-def renovate_transaction(f, date, item, status ):
+def renovate_transaction(date, item, status, f):
     return make_rows(f, [[date, item, status]])
 
 def update_deposits(deposit, f):

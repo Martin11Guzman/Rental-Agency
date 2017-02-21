@@ -1,6 +1,7 @@
 from Classes import *
 import csv
-import file_manipulation
+from file_manipulation import *
+
 def view_inv(inventory_list):
     inventory_string = ''
     for item in inventory_list:

@@ -1,5 +1,6 @@
 import inventory
 from Classes import *
+from inventory import *
 import csv
 
 def check_if_files_exist():
@@ -52,5 +53,8 @@ def update_deposits(deposit, f):
 
 def update_revenue(rent, sales_tax, f):
     return write_row(f, [[rent, sales_tax]])
+
+def update_transaction(date, item, status, f):
+    return write_row(f, [[date, item, status]])
 
 

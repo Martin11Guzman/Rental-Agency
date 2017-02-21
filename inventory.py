@@ -27,8 +27,31 @@ def renovate_inventory(name, quantity, f):
         inv = file.read()
         return inv
 
-def renovate_transaction(f, date, item, status ):
-    return write_row(f, [[date, item, status]])
+
+
+def view_revenue(f1, f2):
+
+    revenue_list = []
+    tax_list = []
+    deposits_list = []
+    rev = data_from_file(f1)
+    if len(rev) > 0:
+        for i in rev:
+            revenue_list.append(int(i[0]))
+            tax_list.append(float(i[1]))
+            total = sum(revenue_list)
+            tax = sum(tax_list)
+            final_total = total + tax
+    else:
+        tax = 0
+        total = 0
+        final_total = 0
+    deposits = data_from_file(f2)
+    for deposit in deposits:
+        deposits_list.append(int(deposit[0]))
+    deposit_total = sum(deposits_list)
+    return "All current pending deposits: " + "$", deposit_total, "total w/o tax: $",\
+total, "sales tax: $", tax, "total: $", final_total
 
 
 

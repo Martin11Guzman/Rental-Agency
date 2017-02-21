@@ -1,4 +1,5 @@
 from inventory import *
+import datetime
 import csv
 
 def check_if_files_exist():
@@ -38,13 +39,14 @@ def make_rows(f, attributes):
 
 
 def choose_item(inventory_list, name):
+    customer_item = ''
     for i in inventory_list:
         customer_item = Rental(i[0], i[1], i[2], i[3], i[4])
         if customer_item.name == name:
             return customer_item
         else:
             customer_item = None
-        return customer_item
+    return customer_item
 
 
 def renovate_transaction(f, date, item, status ):
@@ -55,8 +57,5 @@ def update_deposits(deposit, f):
 
 def update_revenue(rent, sales_tax, f):
     return make_rows(f, [[rent, sales_tax]])
-
-def update_transaction(date, item, status, f):
-    return make_rows(f, [[date, item, status]])
 
 

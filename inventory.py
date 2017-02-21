@@ -36,6 +36,13 @@ def write_row(f, attributes):
 
 
 
+def view_inv(inventory_list):
+    inventory_string = ''
+    for item in inventory_list:
+        inventory_string += ('\nRental: ' + str(item[0])+ '\nreplacement value: '+ "$" + str(item[1])+\
+                              '\ndeposit: '+"$"+ str(item[2])+"\nprice per week: "+ "$" + str(item[3])+\
+                                             '\ncurrent stock: '+ str(item[4])+ "\n")
+        return inventory_string
 
 def renovate_inventory(name, quantity, f):
     stock = []

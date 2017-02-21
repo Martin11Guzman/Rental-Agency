@@ -34,7 +34,6 @@ menu()
 
 
 def rent():
-    "Input determines what item is being rented"
     show = data_from_file('inventory.csv')
     print(view_inv(show))
     item = input("What will you be renting? Product name: ").strip().capitalize()

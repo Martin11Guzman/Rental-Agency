@@ -5,10 +5,10 @@ from file_manipulation import *
 def view_inv(inventory_list):
     inventory_string = ''
     for item in inventory_list:
-        inventory_string += ('\nRental: ' + str(item[0])+ '\nreplacement value: '+ "$" + str(item[1])+\
-                              '\ndeposit: '+"$"+ str(item[2])+"\nprice per week: "+ "$" + str(item[3])+\
-                                             '\ncurrent stock: '+ str(item[4])+ "\n")
-        return inventory_string
+        inventory_string += ('\nRental: ' + str(item[0])+ '\nQuantity: '+  str(item[1])+\
+                              '\nDeposit: '+"$"+ str(item[2])+"\nPrice Per Week: "+ "$" + str(item[3])+\
+                                             '\nReplacement Value: '+ "$" + str(item[4])+ "\n")
+    return inventory_string
 
 def renovate_inventory(name, quantity, f):
     stock = []
@@ -21,7 +21,7 @@ def renovate_inventory(name, quantity, f):
     file = open(f, 'w')
     writer = csv.writer(file, delimiter=',')
     for i in stock:
-        writer.writerow([i.name, i.replacement_value, i.deposit, i.price, i.quantity])
+        writer.writerow([i.name, i.quantity, i.deposit, i.price, i.replacement_value])
     file.close()
     with open(f) as file:
         inv = file.read()
@@ -30,7 +30,6 @@ def renovate_inventory(name, quantity, f):
 
 
 def view_revenue(f1, f2):
-
     revenue_list = []
     tax_list = []
     deposits_list = []
@@ -51,7 +50,22 @@ def view_revenue(f1, f2):
         deposits_list.append(int(deposit[0]))
     deposit_total = sum(deposits_list)
     return "All current pending deposits: " + "$", deposit_total, "total w/o tax: $",\
-total, "sales tax: $", tax, "total: $", final_total
+        total, "sales tax: $", tax, "total: $", final_total
+
+def return_deposits(item, filename):
+    deposit = data_from_file(filename)
+    if len(deposit) == 0:
+        print("There are not items to be returned did you mean to rent? ")
+    else:
+        new_deposit = []
+        for i in deposit:
+            new_deposit.append(i[0])
+        new_deposit.pop(new_deposit.index(item))
+        open(filename, 'w').close()
+        with open(filename, 'w') as file:
+            writer = csv.writer(file)
+            for i in new_deposit:
+                writer.writerow([i])
 
 
 

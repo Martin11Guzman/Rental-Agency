@@ -1,6 +1,7 @@
 import inventory
 from Classes import *
 import csv
+
 def check_if_files_exist():
     datafile="/home/basecamp/Desktop/Rental-Agency/inventory.csv"
     try:
@@ -48,5 +49,8 @@ def choose_item(inventory_list, name):
 
 def update_deposits(deposit, f):
     return write_row(f, [[deposit]])
+
+def update_revenue(rent, sales_tax, f):
+    return write_row(f, [[rent, sales_tax]])
 
 

@@ -10,7 +10,7 @@ import time
 from file_manipulation import *
 
 
-def menu():
+def main():
     print("Hello how you doing!??")
     time.sleep(1)
     print("Welcome to Guz's Medical Equipment Rental Agency. ")
@@ -30,7 +30,7 @@ def menu():
         print('did you mean rent or return? ')
 
 
-menu()
+main()
 
 
 def rent():
@@ -69,7 +69,7 @@ def rent():
                 restart()
 
 
-def restart():
+def rerun():
     print("\nType: rent to rent an item\nType: return to return an item\nType: start to restart program\nType: q to quit\n")
     choice = input().strip().lower()
     if choice == "rent":
@@ -84,5 +84,6 @@ def restart():
         print("invalid input")
         restart()
 
-
+if __name__ == '__main__':
+    main()
 

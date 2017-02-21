@@ -1,5 +1,3 @@
-import inventory
-from Classes import *
 from inventory import *
 import csv
 
@@ -10,7 +8,7 @@ def check_if_files_exist():
         make_data_files('revenue.csv')
         make_data_files('deposit.csv')
         make_data_files('transaction.csv')
-        write_row("inventory.csv", inv_items())
+        make_rows("inventory.csv", inv_items())
 
 
         print("Testing your dns servers, please wait...")
@@ -28,7 +26,7 @@ def data_from_file(f):
     # with open(f, 'rb') as data:
     #     invent = pickle.load(f)
 
-def write_row(f, attributes):
+def make_rows(f, attributes):
     with open(f, 'a', newline='') as file:
         writer = csv.writer(file)
         for row in attributes:
@@ -48,13 +46,17 @@ def choose_item(inventory_list, name):
             customer_item = None
         return customer_item
 
+
+def renovate_transaction(f, date, item, status ):
+    return make_rows(f, [[date, item, status]])
+
 def update_deposits(deposit, f):
-    return write_row(f, [[deposit]])
+    return make_rows(f, [[deposit]])
 
 def update_revenue(rent, sales_tax, f):
-    return write_row(f, [[rent, sales_tax]])
+    return make_rows(f, [[rent, sales_tax]])
 
 def update_transaction(date, item, status, f):
-    return write_row(f, [[date, item, status]])
+    return make_rows(f, [[date, item, status]])
 
 

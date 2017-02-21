@@ -9,7 +9,7 @@ class Rental():
 
     def __repr__(self):
         return 'Rental(name={},quantity={},deposit={},price={},replacement_value={})'.format(repr(self.name),
-        repr(self.quantity), repr(self.price), repr(self.deposit), repr(self.replacement_value))
+        repr(self.quantity), repr(self.deposit), repr(self.price), repr(self.replacement_value))
 
 
 def inv_items():

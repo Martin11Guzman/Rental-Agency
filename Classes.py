@@ -22,6 +22,37 @@ def inv_items():
                        ['Crutches', 20, 50, 100, 500]]
     return inventory_items
 
+class Login():
+    def __init__(self, userpass):
+        self.userpass = userpass
+
+def pick_password():
+    file = '/home/basecamp/Desktop/Rental-Agency/pswd.txt'
+    print("Please input the same username you registered' ")
+    password = input()
+    target = open(file, 'w')
+    target.write(password)
+    file = '/home/basecamp/Desktop/Rental-Agency/existence_check.txt'
+    target = open(file, 'w')
+    target.write('YES')
+
+def password_check():
+    file = '/home/basecamp/Desktop/Rental-Agency/pswd.txt'
+    pwd_check = open(file).read()
+    userpass = input("Create a Username.. If your such a 'CEO'\n")
+    if userpass == pwd_check:
+        print('Username accepted!')
+        print('Saved into our Extremely secured Database so no worries!;)?')
+
+    elif userpass != pwd_check:
+        print('Sorry, wrong password.\n')
+        exit()
+    else:
+        print('Invalid syntax.')
+        exit()
+
+
+
 
 
 

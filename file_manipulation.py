@@ -9,6 +9,8 @@ def check_if_files_exist():
         make_data_files('revenue.csv')
         make_data_files('deposit.csv')
         make_data_files('transaction.csv')
+        make_data_files('existence_check.txt')
+        make_data_files('pswd.txt')
         make_rows("inventory.csv", inv_items())
 
 

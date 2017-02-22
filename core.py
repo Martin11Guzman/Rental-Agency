@@ -1,12 +1,39 @@
-from Classes import *
-from inventory import *
 import sys
-import csv
-import os
 from inventory import *
-import datetime
 import time
 from file_manipulation import *
+# from prac import *
+
+# location of password existence check file
+# EC = '/home/basecamp/Desktop/Rental-Agency/existence_check.txt'
+# PWD = '/home/basecamp/Desktop/Rental-Agency/pswd.txt'  # Location of password file
+#
+# pswd_exist = open(EC).read()  # Checking to see if the password exists
+# if pswd_exist == 'YES':
+#     pass
+# else:
+#     pick_password()  # If it doesn't, user will pick a password
+
+# Checking for password
+
+
+def main():
+    "Initialized program main"
+
+    print("Guz's Medical Equipment Rental Agency")
+    time.sleep(1)
+    sign_in = input('Choose Your position: Customer or CEO \n').strip().lower()
+    if sign_in == "customer":
+        menu()
+    elif sign_in == "ceo":
+        CEO()
+    elif sign_in == "q":
+        print('System closing....')
+        sys.exit()
+    else:
+        print("\nINVALID INPUT\n")
+        main()
+
 
 
 def menu():
@@ -53,7 +80,7 @@ def rent():
                 renovate_inventory(customer_choice.name, \
                 int(customer_choice.quantity)- 1, 'inventory.csv')
                 renovate_transaction(datetime.datetime.now(),\
-                 customer_choice.name, "pending", 'transaction.csv')
+                 customer_choice.name, "awaiting", 'transaction.csv')
                 update_deposits(customer_choice.deposit, 'deposit.csv')
                 rerun()
             elif confirmation == "n":
@@ -67,36 +94,74 @@ def rent():
 
 
 def rerun():
-    print("\nType: rent to rent an item\nType: return to return an item\nType: start to rerun program\nType: q to quit\n")
+    print("\nType: rent to rent an item\nType: return to return an item\nType: main to rerun program\nType: q to quit\n")
     choice = input().strip().lower()
     if choice == "rent":
         rent()
     elif choice == "return":
         return_item()
-    elif choice == "start":
-        start()
+    elif choice == "main":
+        main()
     elif choice == "q":
         print('System closing....')
     else:
         print("invalid input")
         rerun()
 
+def CEO():
+    "Inputs for all CEO actions"
 
-def start():
-    "Initialized program start"
-
-    print('At anytime q will exit program')
-    action = input('Are you a customer or CEO \n').strip().lower()
-    if action == "customer":
-        menu()
-    elif action == "CEO":
+    choice = input(
+        'Type: i to view inventory\nType: t to view transaction history\nType: r to view revenue\nType: Replace to add a replacement item to inventory.\nType: s to restart\n').strip().lower()
+    if choice == "i":
+        inv = data_from_file('inventory.csv')
+        print(view_inv(inv))
         CEO()
-    elif action == "q":
+    elif choice == "t":
+        sales = data_from_file('transaction.csv')
+        print(show_transaction(sales))
+        CEO()
+    elif choice == "r":
+        sales = data_from_file('revenue.csv')
+        print("\n")
+        p_rev = view_revenue('revenue.csv', 'deposit.csv')
+        print(p_rev[0], p_rev[1], "\n" + p_rev[2], p_rev[3], "\n" + p_rev[4], p_rev[5], "\n" + p_rev[6], "\n" + p_rev[7], "\n" + p_rev[8], "\n" + p_rev[9], "\n" + p_rev[10], "\n" + p_rev[11])
+        print("\n")
+        CEO()
+    elif choice == 'rq':
+        name = input("Product being replaced: ").strip().capitalize()
+        quantity = input("How many? ").strip()
+        if quantity.isdigit() != True:
+            print("invalid input")
+            CEO()
+        if name == "q" or quantity == "q":
+            print('System closing...')
+            sys.exit()
+        inv = data_from_file("inventory.csv")
+        item = choose_item(inv, name)
+        if item == None:
+            print('invaid input')
+            CEO()
+        renovate_inventory(name, int(item.quantity) + int(quantity), 'inventory.csv')
+        print("\nInventory has been updated\n")
+        CEO()
+    elif choice == "s":
+        main()
+    elif choice == "q":
         print('System closing....')
         sys.exit()
-    else:
-        print("\nINVALID INPUT\n")
-        start()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -154,4 +219,5 @@ def return_item():
                 print('hours must be a number')
                 return_item()
 
-start()
+if __name__ == '__main__':
+    main()

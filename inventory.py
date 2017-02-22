@@ -49,7 +49,7 @@ def view_revenue(f1, f2):
     for deposit in deposits:
         deposits_list.append(int(deposit[0]))
     deposit_total = sum(deposits_list)
-    return "All current pending deposits: " + "$", deposit_total, "total w/o tax: $",\
+    return "All current awaiting deposits: " + "$", deposit_total, "total w/o tax: $",\
         total, "sales tax: $", tax, "total: $", final_total
 
 def return_deposits(item, filename):
@@ -66,7 +66,12 @@ def return_deposits(item, filename):
             writer = csv.writer(file)
             for i in new_deposit:
                 writer.writerow([i])
-
+def show_transaction(transactions):
+    trans_string = ""
+    for transaction in transactions:
+        trans_string += ("\nDatetime: " + str(transaction[0]) + "\nItem:" + str(transaction[1]) + \
+                                         "\nstatus " + str(transaction[2]) + "\n")
+    return trans_string
 
 
 

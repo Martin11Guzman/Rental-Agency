@@ -9,6 +9,11 @@ from inventory import *
 
 
 
+def test_view_inv():
+    inventory = [['Wheelchair', '20', '90', '100', '900']]
+    test = view_inv(inventory)
+    assert test == ('\nRental: ' + 'Wheelchair' + '\nQuantity: '+  '20' + '\nDeposit: '+
+"$" + '90' +"\nPrice Per Week: "+ "$" + '100' + '\nReplacement Value: '+ '$' + '900' + "\n")
 
 
 class Test_Rental():
@@ -19,5 +24,5 @@ class Test_Rental():
         assert items.deposit == 90
         assert items.price == 100
         assert items.replacement_value == 900
-        assert repr(items) == 'Rental(name={},quantity={},deposit={},price={},replacement_value={})'.format(repr(items.name),
-        repr(items.quantity), repr(items.price), repr(items.deposit), repr(items.replacement_value))
+        assert str(items) == 'Rental(name={},quantity={},deposit={},price={},replacement_value={})'.format(str(items.name),
+        str(items.quantity), str(items.deposit), str(items.price), str(items.replacement_value))

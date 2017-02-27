@@ -5,9 +5,9 @@ from file_manipulation import *
 def view_inv(inventory_list):
     inventory_string = ''
     for item in inventory_list:
-        inventory_string += ('\nRental: ' + str(item[0])+ '\nQuantity: '+  str(item[1])+\
-                              '\nDeposit: '+"$"+ str(item[2])+"\nPrice Per Week: "+ "$" + str(item[3])+\
-                                             '\nReplacement Value: '+ "$" + str(item[4])+ "\n")
+        inventory_string += ('\nRental: ' + str(item[0])+ '\nQuantity: '+  str(item[1])+
+                              '\nDeposit: '+"$"+ str(item[2])+"\nPrice Per Week: "+ "$" + str(item[3])+
+                                             '\nReplacement Value: '+ "$" + str(int(item[4]))+ "\n")
     return inventory_string
 
 def renovate_inventory(name, quantity, f):
@@ -29,47 +29,25 @@ def renovate_inventory(name, quantity, f):
 
 
 
-def view_revenue(f1, f2):
-    revenue_list = []
-    tax_list = []
-    deposits_list = []
-    rev = data_from_file(f1)
-    if len(rev) > 0:
-        for i in rev:
-            revenue_list.append(int(i[0]))
-            tax_list.append(float(i[1]))
-            total = sum(revenue_list)
-            tax = sum(tax_list)
-            final_total = total + tax
-    else:
-        tax = 0
-        total = 0
-        final_total = 0
-    deposits = data_from_file(f2)
-    for deposit in deposits:
-        deposits_list.append(int(deposit[0]))
-    deposit_total = sum(deposits_list)
-    return "All current awaiting deposits: " + "$", deposit_total, "total w/o tax: $",\
-        total, "sales tax: $", tax, "total: $", final_total
 
-def return_deposits(item, filename):
-    deposit = data_from_file(filename)
+def return_deposits(item, f):
+    deposit = data_from_file(f)
     if len(deposit) == 0:
-        print("There are not items to be returned did you mean to rent? ")
+        print("Wait it looks like there are 0 rentals to be returned..")
     else:
         new_deposit = []
         for i in deposit:
             new_deposit.append(i[0])
         new_deposit.pop(new_deposit.index(item))
-        open(filename, 'w').close()
-        with open(filename, 'w') as file:
+        open(f, 'w').close()
+        with open(f, 'w') as file:
             writer = csv.writer(file)
             for i in new_deposit:
                 writer.writerow([i])
 def show_transaction(transactions):
     trans_string = ""
     for transaction in transactions:
-        trans_string += ("\nDatetime: " + str(transaction[0]) + "\nItem:" + str(transaction[1]) + \
+        trans_string += ("\nDatetime: " + str(transaction[0]) + "\nRental:" + str(transaction[1]) +
                                          "\nstatus " + str(transaction[2]) + "\n")
     return trans_string
 

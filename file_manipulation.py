@@ -1,6 +1,7 @@
 from inventory import *
 import datetime
 import csv
+import time
 
 def check_if_files_exist():
     datafile="/home/basecamp/Desktop/Rental-Agency/inventory.csv"
@@ -9,12 +10,10 @@ def check_if_files_exist():
         make_data_files('revenue.csv')
         make_data_files('deposit.csv')
         make_data_files('transaction.csv')
-        make_data_files('existence_check.txt')
-        make_data_files('pswd.txt')
         make_rows("inventory.csv", inv_items())
-
-
-        print("Testing your dns servers, please wait...")
+        print("<<<<<<<ESTABLISHING FILES>>>>>>>")
+        time.sleep(1)
+        print("Testing Inventory's  dns server, please wait till data loads...")
     except IOError as e:
        print("Error: %s not found." % datafile)
 
@@ -38,6 +37,9 @@ def make_rows(f, attributes):
         data = file.read()
         return data
 
+def update_deposits(deposit, f):
+    return make_rows(f, [[deposit]])
+
 
 
 def choose_item(inventory_list, name):
@@ -54,8 +56,7 @@ def choose_item(inventory_list, name):
 def renovate_transaction(date, item, status, f):
     return make_rows(f, [[date, item, status]])
 
-def update_deposits(deposit, f):
-    return make_rows(f, [[deposit]])
+
 
 def update_revenue(rent, sales_tax, f):
     return make_rows(f, [[rent, sales_tax]])

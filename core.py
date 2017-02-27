@@ -2,67 +2,57 @@ import sys
 from inventory import *
 import time
 from file_manipulation import *
-# from prac import *
-
-# location of password existence check file
-# EC = '/home/basecamp/Desktop/Rental-Agency/existence_check.txt'
-# PWD = '/home/basecamp/Desktop/Rental-Agency/pswd.txt'  # Location of password file
-#
-# pswd_exist = open(EC).read()  # Checking to see if the password exists
-# if pswd_exist == 'YES':
-#     pass
-# else:
-#     pick_password()  # If it doesn't, user will pick a password
-
-# Checking for password
 
 
 def main():
     "Initialized program main"
-
-    print("Guz's Medical Equipment Rental Agency")
-    time.sleep(1)
     sign_in = input('Choose Your position: Customer or CEO \n').strip().lower()
     if sign_in == "customer":
         menu()
     elif sign_in == "ceo":
         CEO()
     elif sign_in == "q":
-        print('System closing....')
+        print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
         sys.exit()
     else:
-        print("\nINVALID INPUT\n")
+        print("\nIncorrect input\n")
         main()
 
 
 
 def menu():
-    print("Hello how you doing!??")
+    print("<<<<< WELCOME TO GUZ'S MEDICAL EQUIPMENT RENTAL AGENCY © >>>>>>>>>>> ")
     time.sleep(1)
-    print("Welcome to Guz's Medical Equipment Rental Agency. ")
+    print("How may we help you?")
     time.sleep(1)
-    print("How can I help you today?")
-    choice = input("are you renting or returning an item?\n").strip().lower()
+    print("Rental options:")
+    time.sleep(1)
+    print("choose rent to Rent a rental\n               Or \nChoose return to Return a rental")
+
+    print("\n")
+    choice = input("Please type in your Rental option my fellow client.\n").strip().lower()
     if choice == "rent":
         check_if_files_exist()
+        time.sleep(2)
         rent()
     elif choice == "return":
         return_item()
     elif choice == "q":
-        print("System closing...")
+        print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
         sys.exit()
     else:
-        print("\nINVALID INPUT\n")
-        print('did you mean rent or return? ')
+        print("\nIncorrect input\n")
+        print('PLEASE TYPE IN OPTION CORRECTLY:  rent or return? ')
+        time.sleep(1)
         menu()
 
 
 def rent():
     show = data_from_file('inventory.csv')
     print(view_inv(show))
-    item = input("What will you be renting? Product name: ").strip().capitalize()
-    if item == "Q":
-        print('System closing...')
+    item = input("Please choose any of the medical equipment above to rent. ").strip().capitalize()
+    if item == "q":
+        print("<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
         sys.exit()
     else:
         customer_choice = choose_item(data_from_file('inventory.csv'), item)
@@ -70,23 +60,31 @@ def rent():
             print("\nInvalid choice " + item + " is not in inventory\n")
             rent()
         else:
-            print(customer_choice.deposit, customer_choice.price)
-            print("You must place a deposit of $", customer_choice.deposit,\
-                "along with a fee of $", customer_choice.price,\
-                "every hour the item is rented. Deposits are refunded upon return.\n")
-            print("Confirm you purchase for\n", str(customer_choice))
-            confirmation = input('y/n\n').strip().lower()
-            if confirmation == "y":
-                renovate_inventory(customer_choice.name, \
+            print("<<<<<<<<  PROCESSING PURCHASE >>>>>>>>>")
+            time.sleep(1)
+            print("<<<<<<<<  CLIENT RECEIPT >>>>>>>")
+
+            print("Deposit fee: $",customer_choice.deposit,
+                  "\n"
+                "Amount of weeks rented item with flat rental fee: $",customer_choice.price,
+                  "\n"
+                "All Deposits will be reimbursed after return")
+
+            print("Do you accept your purchase\n", str(customer_choice))
+            decision = input('Yes or NO\n').strip().lower()
+            if decision == "yes":
+                renovate_inventory(customer_choice.name,
                 int(customer_choice.quantity)- 1, 'inventory.csv')
-                renovate_transaction(datetime.datetime.now(),\
-                 customer_choice.name, "awaiting", 'transaction.csv')
+                renovate_transaction(datetime.datetime.now(),
+                customer_choice.name, "awaiting", 'transaction.csv')
                 update_deposits(customer_choice.deposit, 'deposit.csv')
+                print("<<<<<<<<<<<<<<<<<<Thanks for purchasing a rental  At Guz's!!>>>>>>>>>>>")
+                time.sleep(1)
                 rerun()
-            elif confirmation == "n":
+            elif decision == "no":
                 rerun()
-            elif confirmation == "q":
-                print("System closing...")
+            elif decision == "q":
+                print("Rental agency closing...")
                 sys.exit()
             else:
                 print('invalid entry')
@@ -94,48 +92,42 @@ def rent():
 
 
 def rerun():
-    print("\nType: rent to rent an item\nType: return to return an item\nType: main to rerun program\nType: q to quit\n")
+    print("\nChoose option: rent to rent an item\nChoose option:return to return an item\nChoose option: restart to rerun program\nChoose option: q to quit\n")
     choice = input().strip().lower()
     if choice == "rent":
         rent()
     elif choice == "return":
         return_item()
-    elif choice == "main":
+    elif choice == "restart":
         main()
     elif choice == "q":
-        print('System closing....')
+        print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
     else:
         print("invalid input")
         rerun()
 
 def CEO():
     "Inputs for all CEO actions"
+    print(" Hey their Mr.'Ceo' ")
 
     choice = input(
-        'Type: i to view inventory\nType: t to view transaction history\nType: r to view revenue\nType: Replace to add a replacement item to inventory.\nType: s to restart\n').strip().lower()
-    if choice == "i":
+        'Choose option:<view inventory> - to view inventory\nChoose option:<transaction history? - to display transactions\nChoose option:<update> - to add an item to inventory.\nChoose option:<restart> - to restart\n').strip().lower()
+    if choice == "view inventory":
         inv = data_from_file('inventory.csv')
         print(view_inv(inv))
         CEO()
-    elif choice == "t":
+    elif choice == "transaction history":
         sales = data_from_file('transaction.csv')
         print(show_transaction(sales))
         CEO()
-    elif choice == "r":
-        sales = data_from_file('revenue.csv')
-        print("\n")
-        p_rev = view_revenue('revenue.csv', 'deposit.csv')
-        print(p_rev[0], p_rev[1], "\n" + p_rev[2], p_rev[3], "\n" + p_rev[4], p_rev[5], "\n" + p_rev[6], "\n" + p_rev[7], "\n" + p_rev[8], "\n" + p_rev[9], "\n" + p_rev[10], "\n" + p_rev[11])
-        print("\n")
-        CEO()
-    elif choice == 'rq':
-        name = input("Product being replaced: ").strip().capitalize()
+    elif choice == 'update':
+        name = input("Rentals being added: ").strip().capitalize()
         quantity = input("How many? ").strip()
         if quantity.isdigit() != True:
             print("invalid input")
             CEO()
         if name == "q" or quantity == "q":
-            print('System closing...')
+            print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
             sys.exit()
         inv = data_from_file("inventory.csv")
         item = choose_item(inv, name)
@@ -143,22 +135,13 @@ def CEO():
             print('invaid input')
             CEO()
         renovate_inventory(name, int(item.quantity) + int(quantity), 'inventory.csv')
-        print("\nInventory has been updated\n")
+        print("\nYour inventory has been renovated!\n")
         CEO()
-    elif choice == "s":
+    elif choice == "restart":
         main()
     elif choice == "q":
-        print('System closing....')
+        print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
         sys.exit()
-
-
-
-
-
-
-
-
-
 
 
 
@@ -170,9 +153,9 @@ def return_item():
     inv = data_from_file('inventory.csv')
     for item in inv:
         print("\n"+item[0])
-    item = input("\nWhat item are you returning\n").strip().capitalize()
-    if item == 'Q':
-        print("System closing....")
+    item = input("\nWhat rental are you returning \n").strip().capitalize()
+    if item == 'q':
+        print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
         sys.exit()
     else:
         returning_item = choose_item(data_from_file('inventory.csv'), item)
@@ -180,44 +163,44 @@ def return_item():
             print("Invalid Input " + item + " is not in inventory to be returned")
             return_item()
         else:
-            hours = input("How many hours was the product rented? ").strip().lower()
-            if hours == "q":
-                print('System closing....')
+            weeks = input("For how many weeks did you rent the rental item? ").strip().lower()
+            if weeks == "q":
+                print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
                 sys.exit()
-            elif hours.isdigit():
-                item_status = input("Is the product broken or damaged y/n? ").strip().lower()
-                if item_status == "y":
-                    print("Your deposit will not be returned you owe the following:"+ \
-                            str(returning_item.replacement_value) +\
-                            " dollars for replacement of the item. and "\
-                            + "$" + str(int(returning_item.price) * int(hours)) + " for rent.")
-                    rent_amount = int(returning_item.price) * int(hours)
+            elif weeks.isdigit():
+                item_status = input(" is there any issues with your expensive rental? yes/no ").strip().lower()
+                if item_status == "yes":
+                    print("Your deposit will not be returned due to your irresponsibility.  you owe the following:"+
+                            str(int(returning_item.replacement_value)) +
+                            " dollars for replacement of the item. and "
+                            + "$" + str(int(returning_item.price) * int(weeks)) + " for rent.")
+                    rent_amount = int(returning_item.price) * int(weeks)
                     sales_tax = rent_amount * 0.07
                     update_revenue(rent_amount, sales_tax, 'revenue.csv')
-                    renovate_transaction(datetime.datetime.now(), returning_item.name, \
-                    "compensated", 'transaction.csv')
+                    renovate_transaction(datetime.datetime.now(), returning_item.name,
+                    "Reimburse", 'transaction.csv')
                     rerun()
-                elif item_status == 'n':
-                    print("Your deposit will be returned you owe the following: $"+ \
-                    str(int(returning_item.price) * int(hours)) + " for rent.")
+                elif item_status == 'no':
+                    print("This is what you owe my fellow client: $"+ \
+                    str(int(returning_item.price) * int(weeks)) + " for the rental fee.")
                     return_deposits(returning_item.deposit, 'deposit.csv')
                     renovate_inventory(returning_item.name, int(returning_item.quantity)+1, 'inventory.csv')
-                    rent_amount = int(returning_item.price) * int(hours)
+                    rent_amount = int(returning_item.price) * int(weeks)
                     sales_tax = rent_amount * 0.07
                     update_revenue(rent_amount, sales_tax, 'revenue.csv')
-                    renovate_transaction(datetime.datetime.now(), returning_item.name, \
+                    renovate_transaction(datetime.datetime.now(), returning_item.name,
                     "returned", 'transaction.csv')
                     rerun()
                 elif item_status == "q":
-                    print('System closing....')
+                    print("<<<<<<<<<Thank you for choosing Guz's>>>>>>>>>")
                 else:
-                    print('\nInvalid Input\n')
+                    print('\nIncorrect Input\n')
                     return_item()
 
             else:
                 print('invalid input')
-                print('hours must be a number')
                 return_item()
 
 if __name__ == '__main__':
     main()
+

@@ -1,8 +1,5 @@
-from Classes import *
+from Classes import Rental
 import pytest
-import os
-import datetime
-import csv
 from inventory import *
 
 """ Module purpose is to Test my logic of this Application"""
@@ -24,5 +21,5 @@ class Test_Rental():
         assert items.deposit == 90
         assert items.price == 100
         assert items.replacement_value == 900
-        assert str(items) == 'Rental(name={},quantity={},deposit={},price={},replacement_value={})'.format(str(items.name),
-        str(items.quantity), str(items.deposit), str(items.price), str(items.replacement_value))
+        assert repr(items) == 'Rental(name={},quantity={},deposit={},price={},replacement_value={})'.format(repr(items.name),
+        repr(items.quantity), repr(items.deposit), repr(items.price), repr(items.replacement_value))

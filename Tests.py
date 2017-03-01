@@ -10,7 +10,7 @@ def test_view_inv():
     inventory = [['Wheelchair', '20', '90', '100', '900']]
     test = view_inv(inventory)
     assert test == ('\nRental: ' + 'Wheelchair' + '\nQuantity: '+  '20' + '\nDeposit: '+
-"$" + '90' +"\nPrice Per Week: "+ "$" + '100' + '\nReplacement Value: '+ '$' + '900' + "\n")
+    "$" + '90' +"\nPrice Per Week: "+ "$" + '100' + '\nReplacement Value: '+ '$' + '900' + "\n")
 
 
 class Test_Rental():
